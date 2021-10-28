@@ -1,10 +1,14 @@
-const express = require('express')
+const express = require("express");
 
-const router = express.Router()
-const controller = require('../controllers/index.controller')
+// Utiliza la función router de express
+const router = express.Router();
 
-router.get('/', controller.index)
-router.get('/new_entry', controller.new_entry)
-router.post('/new_entry', controller.new_entry_post)
+// Importa los controladores
+const controller = require("../controllers/index.controller");
 
-module.exports = router
+// Conecta la ruta con el controlador
+router.get("/", controller.index);
+router.get("/new_entry", controller.new_entry);
+router.post("/new_entry", controller.new_entry_post);
+
+module.exports = router;

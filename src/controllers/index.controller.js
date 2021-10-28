@@ -1,28 +1,39 @@
-const controller = {}
+// Crea un objeto controller que contiene la lógica a implementar en cada ruta
+const controller = {};
 
-controller.index = (req, res)=>{
-    res.render('index', {
-        titulo : "Inicio"})
-}
+// Importa la conexión a la db
+const connection = require("../database/connection");
 
-controller.new_entry = (req, res)=>{
-    res.render('new_entry', {
-        titulo : "Ingresar nueva nota"})
-}
+// Importa el modelo
+const Model = require("../models/cuadernoWeb.model");
 
-controller.new_entry_post = (req, res)=>{
-    if (!req.body.title || !req.body.body) {
-        res.status(400).send("Todos los campos deben estar completos")
-        return
-    }
+// Establece el funcionamiento de cada ruta  creando un atributo del objeto controller
+controller.index = async (req, res) => {
+  try {
+    await connection();
+    const todasLasNotas = await Model.find();
+    res.render("index", {
+      titulo: "Inicio",
+      notas: todasLasNotas,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-    let nueva_entrada = {
-        titulo: req.body.title,
-        contenido: req.body.body,
-        publicado: new Date()
-    }
+controller.new_entry = (req, res) => {
+  res.render("new_entry", {
+    titulo: "Ingresar nueva nota",
+  });
+};
 
+controller.new_entry_post = (req, res) => {
+  let nueva_entrada = {
+    title: req.body.title,
+    body: req.body.body,
+  };
+  new Model(nueva_entrada).save();
+  res.redirect('/');
+};
 
-}
-
-module.exports = controller
+module.exports = controller;
