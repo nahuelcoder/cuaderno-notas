@@ -8,4 +8,4 @@ Esta aplicación es desarrollada con las siguietes herramientas:
 - EJS
 - MongoDB
 
-![Captura cuaderno web](/public/resources/Captura)
+![Captura cuaderno web](public/resources/Captura.jpg)
